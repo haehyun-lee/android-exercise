@@ -1,5 +1,6 @@
 # 카카오톡 비밀번호 확인 화면
 
+### Study
 * Linearlayout - orientation
 * TextView - text, textColor, textSize, textStyle, autoLink, maxLines, ellipsize, singleLine
 * ImageView - src, maxWidth, maxHeight, adjustViewBounds
