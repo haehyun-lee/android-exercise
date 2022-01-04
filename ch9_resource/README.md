@@ -3,6 +3,7 @@
 - 기기를 사용하는 지역에 따라 메시지를 알맞는 언어로 출력
 - 문자열, 이미지 등 리소스 파일 사용하기
 
+
 ### Study
 * 앱 리소스, 플랫폼 리소스 활용
 * 리소스 조건 설정 (Orientation, Locale)
@@ -10,11 +11,13 @@
 * string.xml 문자열 리소스 
 * XML로 작성한 이미지 리소스
 
+
 ### Application UI
 한국어(ko-rKR)
 
 ![ch09_resource 002](https://user-images.githubusercontent.com/86085387/148040806-b1bb46b7-71d1-4720-bc7f-2509df918a62.png)
 ![ch09_resource 001](https://user-images.githubusercontent.com/86085387/148040816-107c8d28-8611-4786-9a55-592356ccbbb9.png)
+
 
 영어(en)
 
