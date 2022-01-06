@@ -2,8 +2,6 @@ package com.example.androidlab
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Intent
 import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.RingtoneManager
@@ -12,6 +10,8 @@ import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.app.Person
+import androidx.core.graphics.drawable.IconCompat
 import com.example.androidlab.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 channel.enableVibration(true)                       // 진동 울림
                 channel.vibrationPattern = longArrayOf(100, 200, 100, 200)  // 진동 패턴
 
-                // 채널을 NotificationManager에 등록
+                // 채널을 NotificationManager 에 등록
                 manager.createNotificationChannel(channel)
 
                 // 채널 Id로 NotificationCompat.builder 생성
@@ -57,30 +57,41 @@ class MainActivity : AppCompatActivity() {
             }
 
             // 알림 정보 설정
-            builder.setSmallIcon(android.R.drawable.sym_action_call)    // 스몰 아이콘
+            builder.setSmallIcon(android.R.drawable.sym_action_chat)          // 스몰 아이콘
             builder.setWhen(System.currentTimeMillis())     // 알림 시각
-            builder.setContentTitle("전화")        // 타이틀
-            builder.setContentText("김철수님에게 전화가 왔습니다.")       // 내용
+            builder.setContentTitle("채팅")                  // 타이틀
+            builder.setContentText("프로그래밍 스터디")      // 내용
 
-            // 액션 등록
-            val actionIntent = Intent(this, ReplyReceiver::class.java)
-            val actionPendingIntent = PendingIntent.getBroadcast(this, 20, actionIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-            builder.addAction(
-                NotificationCompat.Action.Builder(
-                    android.R.drawable.sym_action_call,
-                    "전화 받기",
-                    actionPendingIntent
-                ).build()
+            // Person 객체 생성 (발신인 이름, 아이콘)
+            val sender1: Person = Person.Builder()
+                .setName("김철수")
+                .setIcon(IconCompat.createWithResource(this, R.drawable.user))
+                .build()
+
+            val sender2: Person = Person.Builder()
+                .setName("이영희")
+                .setIcon(IconCompat.createWithResource(this, R.drawable.user))
+                .build()
+
+            // Message 객체 생성 (내용, 시간)
+            val message1 = NotificationCompat.MessagingStyle.Message(
+                "안녕하세요. 김철수입니다.",
+                System.currentTimeMillis(),
+                sender1
             )
-            builder.addAction(
-                NotificationCompat.Action.Builder(
-                    android.R.drawable.stat_notify_missed_call,
-                    "전화 거절",
-                    actionPendingIntent
-                ).build()
+            val message2 = NotificationCompat.MessagingStyle.Message(
+                "이영희입니다. 잘 부탁드립니다.",
+                System.currentTimeMillis(),
+                sender2
             )
+
+            // MessageStyle 적용
+            val messageStyle = NotificationCompat.MessagingStyle(sender1)
+                .addMessage(message1)
+                .addMessage(message2)
+            builder.setStyle(messageStyle)
 
             manager.notify(11, builder.build())
         }
-    }
+   }
 }
