@@ -1,4 +1,9 @@
 # Material 라이브러리로 화면 구성하기
+* AppBar, Coordinator, CollapsingToolbarLayout을 이용해 접히는 화면의 AppBar를 구현
+* TabLayout으로 탭 화면을 만들어 ViewPager2와 연동, ViewPager를 구성하는 Fragment 개수대로 TabItem 자동 생성
+* DrawerLayout으로 열리는 화면을 NavigationView로 구현
+* ExtendedFloatingActionButton 출력
+
 
 ### Screenshots
 ![ch12_material](https://user-images.githubusercontent.com/86085387/149470972-5adbeeb5-cc17-4b64-8d63-471729d49b84.gif)
@@ -12,5 +17,6 @@
 * CoordinatorLayout
 * CollapsingToolbarLayout
 * TabLayout, TabItem (with ViewPager)
+* 
 * ExtendedFloatingActionButton
 * ActionBarDrawerToggle
