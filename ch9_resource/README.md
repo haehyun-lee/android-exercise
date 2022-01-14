@@ -12,7 +12,7 @@
 * XML로 작성한 이미지 리소스
 
 
-### Application UI
+### Screenshots
 한국어(ko-rKR)
 
 ![ch09_resource 002](https://user-images.githubusercontent.com/86085387/148040806-b1bb46b7-71d1-4720-bc7f-2509df918a62.png)
