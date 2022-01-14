@@ -17,6 +17,6 @@
 * CoordinatorLayout
 * CollapsingToolbarLayout
 * TabLayout, TabItem (with ViewPager)
-* 
+* NavigationView
 * ExtendedFloatingActionButton
 * ActionBarDrawerToggle
