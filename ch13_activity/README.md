@@ -6,13 +6,16 @@
 * RecyclerView 항목 동적 추가
 * 화면 전화 시 데이터가 사라지지 않도록 Bundle에 데이터 저장 및 가져오기
 
-### Screenshots
+
+## Screenshots
 ![Ch13_Activity](https://user-images.githubusercontent.com/86085387/150302746-87c443f3-3cef-4dce-969e-c10878b1f3f3.gif)
 
-### Layout Structure
+
+## Layout Structure
 ![ch13_activity](https://user-images.githubusercontent.com/86085387/150302762-09188462-3e53-4646-a3aa-098dccac1e29.jpg)
 
-### Study
+
+## Study
 * Activity
 * Activity life cycle
 * Bundle
@@ -34,7 +37,8 @@
   * singleTask
   * singleInstance
 
-### Add more
+
+## Add more
 본 예제에서 배운 기능들을 활용하여 좀 더 제대로 된 Todo 리스트 앱으로 개선할 예정
 * Todo 삭제
 * Todo 수정
