@@ -4,12 +4,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center">
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/extendedFab"
+    <EditText
+        android:id="@+id/editView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <Button
+        android:id="@+id/showButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="EXTENDED FAB"
-        app:icon="@android:drawable/ic_input_add" />
+        android:text="Show SoftInput" />
+
+    <Button
+        android:id="@+id/hideButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hide SoftInput"/>
+
 </LinearLayout>
