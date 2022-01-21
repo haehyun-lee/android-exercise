@@ -13,7 +13,7 @@
 
 
 ### 2. Notification
-<img src="https://user-images.githubusercontent.com/86085387/150493247-1e08c758-57f8-4a68-82ab-aa202f8ee28c.gif" width="400"/>
+<img src="https://user-images.githubusercontent.com/86085387/150493247-1e08c758-57f8-4a68-82ab-aa202f8ee28c.gif" width="300"/>
 
 ## Study
 * Broadcast Receiver
