@@ -7,22 +7,4 @@
     android:orientation="vertical"
     android:gravity="center">
 
-    <EditText
-        android:id="@+id/editView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-
-    <Button
-        android:id="@+id/showButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Show SoftInput" />
-
-    <Button
-        android:id="@+id/hideButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hide SoftInput"/>
-
 </LinearLayout>
