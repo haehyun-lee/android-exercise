@@ -1,8 +1,6 @@
 package com.example.androidlab
 
 import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
@@ -14,14 +12,17 @@ class MainActivity : AppCompatActivity() {
     lateinit var aidlService: IMyAidlInterface
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        baseContext
         // 서비스 실행
-        val intent = Intent("ACTION_AIDL_SERVICE")
-        intent.setPackage("com.example.test_outter")
-        bindService(intent, connection, Context.BIND_AUTO_CREATE)
+//        val intent = Intent("ACTION_AIDL_SERVICE")
+//        intent.setPackage("com.example.test_outter")
+//        bindService(intent, connection, Context.BIND_AUTO_CREATE)
+
     }
 
     // ServiceConnection 객체 생성
