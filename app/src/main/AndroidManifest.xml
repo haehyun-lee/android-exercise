@@ -16,6 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidLab">
         <service
+            android:name=".MyJobService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"></service>
+        <service
             android:name=".MyService"
             android:enabled="true"
             android:exported="true">

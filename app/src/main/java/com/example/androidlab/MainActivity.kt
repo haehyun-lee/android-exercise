@@ -1,39 +1,41 @@
 package com.example.androidlab
 
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
 import android.content.ComponentName
-import android.content.ServiceConnection
+import android.os.Build
 import android.os.Bundle
-import android.os.IBinder
-import android.util.Log
+import android.os.Messenger
+import android.os.PersistableBundle
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.getSystemService
 import com.example.androidlab.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    lateinit var aidlService: IMyAidlInterface
+    lateinit var messenger: Messenger
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        baseContext
-        // 서비스 실행
-//        val intent = Intent("ACTION_AIDL_SERVICE")
-//        intent.setPackage("com.example.test_outter")
-//        bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        var jobScheduler: JobScheduler? = getSystemService<JobScheduler>()
+        val extras = PersistableBundle()
+        extras.putString("extra_data", "hello world")
+        val builder = JobInfo.Builder(1, componentName)
+        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)  // 네트워크 타입
+        builder.setRequiresCharging(true)   // 배터리 충전 상태
+        builder.setExtras(extras)
+        val jobInfo = builder.build()
+        jobScheduler!!.schedule(jobInfo)
 
-    }
 
-    // ServiceConnection 객체 생성
-    val connection: ServiceConnection = object : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            aidlService = IMyAidlInterface.Stub.asInterface(service)
+        JobInfo.Builder(1, ComponentName(this, MyJobService::class.java)).run {
+            setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+            jobScheduler?.schedule(build())
         }
 
-        override fun onServiceDisconnected(name: ComponentName?) {
-            Log.d("kkang", "onServiceDisconnected..")
-        }
     }
-
 }
