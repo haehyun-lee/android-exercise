@@ -1,0 +1,144 @@
+package com.example.ch15_service
+
+import android.annotation.TargetApi
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
+import android.content.ComponentName
+import android.content.ServiceConnection
+import android.os.*
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.getSystemService
+import com.example.ch15_service.databinding.ActivityMainBinding
+import kotlinx.coroutines.*
+
+class MainActivity : AppCompatActivity() {
+    lateinit var binding: ActivityMainBinding
+    var connectionMode = "none"
+
+    // Messenger
+    lateinit var messenger: Messenger
+    lateinit var replyMessenger: Messenger
+    var messengerJob: Job? = null
+
+    // aidl
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Messenger
+        onCreateMessengerService()
+
+        // aidl
+        onCreateAIDLService()
+
+        // JobScheduler
+        onCreateJobScheduler()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+
+    fun changeViewEnable() = when (connectionMode) {
+        "messenger" -> {
+
+        }
+        "aidl" -> {
+
+        }
+        else -> {
+            // 초기상태, stop 상태, 두 play 버튼 활성 상태
+
+        }
+    }
+
+    // messenger handler
+    inner class HandlerReplyMsg : Handler(Looper.getMainLooper()) {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+            // MyMessengerService 에서 전송된 데이터
+            when (msg.what) {
+                10 -> {
+                    // 재생 후 시간
+                    val bundle = msg.obj as Bundle
+                    bundle.getInt("duration")?.let {
+                        when {
+                            (it > 0) -> {
+                                // 음악 프로그래스바 진행
+                                binding.messengerProgress.max = it
+                                val backgroundScope = CoroutineScope(Dispatchers.Default + Job())
+                                messengerJob = backgroundScope.launch {
+                                    while (binding.messengerProgress.progress < binding.messengerProgress.progress.max) {
+                                        delay(100)
+                                        binding.messengerProgress.incrementProgressBy(1000)
+                                    }
+                                }
+                                changeViewEnable()
+                            }
+                            else -> {
+                                connectionMode = "none"
+                                unbindService(messengerConnection)
+                                changeViewEnable()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // messenger connection
+    val messengerConnection: ServiceConnection = object: ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            Log.d("test", "onServiceConnected...")
+            // MyMessengerService 에서 반환된 데이터
+            messenger = Messenger(service)
+            // MyMessengerService 로 데이터 전송
+            val msg = Message()
+            msg.replyTo = replyMessenger
+            msg.what = 10
+            messenger.send(msg)
+            // 메신저 바인딩 상태
+            connectionMode = "messenger"
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            Log.d("test", "onServiceDisconnected...")
+        }
+    }
+
+    private fun onCreateMessengerService() {
+
+
+    }
+
+    private fun onStopMessengerService() {
+        val msg = Message()
+        msg.what = 20
+        messenger.send(msg)
+        unbindService(messengerConnection)
+    }
+
+    // aidl connection
+
+    private fun onCreateAIDLService() {
+
+    }
+    private fun onStopAIDLService() {
+
+    }
+
+    // JobScheduler
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun onCreateJobScheduler() {
+        // 스마트폰이 와이파이를 이용하는 상황에서 실행되는 잡 스케줄러
+        var jobScheduler: JobScheduler? = getSystemService<JobScheduler>()
+        val builder = JobInfo.Builder(1, ComponentName(this, MyJobService::class.java))
+        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+        val jobInfo = builder.build()
+        jobScheduler!!.schedule(jobInfo)
+    }
+}
