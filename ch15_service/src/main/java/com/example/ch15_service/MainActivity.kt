@@ -4,11 +4,14 @@ import android.annotation.TargetApi
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
 import android.content.ServiceConnection
 import android.os.*
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.getSystemService
+import com.example.ch15_outer.MyAIDLInterface
 import com.example.ch15_service.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
 
@@ -22,6 +25,8 @@ class MainActivity : AppCompatActivity() {
     var messengerJob: Job? = null
 
     // aidl
+    var aidlService: MyAIDLInterface? = null
+    var aidlJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,18 +45,37 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
+        if (connectionMode === "messenger") {
+            onStopMessengerService()
+        }else if (connectionMode === "aidl") {
+            onStopAIDLService()
+        }
+        connectionMode = "none"
+        changeViewEnable()
     }
 
     fun changeViewEnable() = when (connectionMode) {
         "messenger" -> {
-
+            binding.messengerPlay.isEnabled = true
+            binding.aidlPlay.isEnabled = false
+            binding.messengerStop.isEnabled = true
+            binding.aidlStop.isEnabled = false
         }
         "aidl" -> {
-
+            binding.messengerPlay.isEnabled = false
+            binding.aidlPlay.isEnabled = true
+            binding.messengerStop.isEnabled = false
+            binding.aidlStop.isEnabled = true
         }
         else -> {
             // 초기상태, stop 상태, 두 play 버튼 활성 상태
+            binding.messengerPlay.isEnabled = true
+            binding.aidlPlay.isEnabled = true
+            binding.messengerStop.isEnabled = false
+            binding.aidlStop.isEnabled = false
 
+            binding.messengerProgress.progress = 0
+            binding.aidlProgress.progress = 0
         }
     }
 
@@ -59,7 +83,7 @@ class MainActivity : AppCompatActivity() {
     inner class HandlerReplyMsg : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
-            // MyMessengerService 에서 전송된 데이터
+            // 외부 앱 서비스에서 전송한 데이터
             when (msg.what) {
                 10 -> {
                     // 재생 후 시간
@@ -71,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                                 binding.messengerProgress.max = it
                                 val backgroundScope = CoroutineScope(Dispatchers.Default + Job())
                                 messengerJob = backgroundScope.launch {
-                                    while (binding.messengerProgress.progress < binding.messengerProgress.progress.max) {
+                                    while (binding.messengerProgress.progress < binding.messengerProgress.max) {
                                         delay(100)
                                         binding.messengerProgress.incrementProgressBy(1000)
                                     }
@@ -94,14 +118,12 @@ class MainActivity : AppCompatActivity() {
     val messengerConnection: ServiceConnection = object: ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             Log.d("test", "onServiceConnected...")
-            // MyMessengerService 에서 반환된 데이터
+            // 서비스에서 반환된 IBinder로 Messenger 생성, 외부 앱 서비스의 핸들러 사용
             messenger = Messenger(service)
-            // MyMessengerService 로 데이터 전송
             val msg = Message()
             msg.replyTo = replyMessenger
             msg.what = 10
             messenger.send(msg)
-            // 메신저 바인딩 상태
             connectionMode = "messenger"
         }
 
@@ -111,8 +133,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onCreateMessengerService() {
-
-
+        // 해당 액티비이의 Handler로 Messenger 생성, 해당 앱의 핸들러 사용
+        replyMessenger = Messenger(HandlerReplyMsg())
+        binding.messengerPlay.setOnClickListener{
+            // 암시적 인텐트로 외부 앱 연동, 서비스 실행
+            val intent = Intent("ACTION_SERVICE_Messenger")
+            intent.setPackage("com.example.ch15_outer")
+            bindService(intent, messengerConnection, Context.BIND_AUTO_CREATE)
+        }
+        binding.messengerStop.setOnClickListener {
+            // 음악 정지, 외부 앱 서비스 종료
+            val msg = Message()
+            msg.what = 20
+            messenger.send(msg)
+            unbindService(messengerConnection)
+            messengerJob?.cancel()
+            connectionMode = "none"
+            changeViewEnable()
+        }
     }
 
     private fun onStopMessengerService() {
@@ -123,12 +161,45 @@ class MainActivity : AppCompatActivity() {
     }
 
     // aidl connection
+    val aidlConnection: ServiceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            // MyAIDLService에서 반환한 익명 클래스 객체
+            aidlService = MyAIDLInterface.Stub.asInterface(service)
+            aidlService!!.start()
+            binding.aidlProgress.max = aidlService!!.maxDuration
+            val backgroundScope = CoroutineScope(Dispatchers.Default + Job())
+            aidlJob = backgroundScope.launch {
+                while (binding.aidlProgress.progress < binding.aidlProgress.max) {
+                    delay(100)
+                    binding.aidlProgress.incrementProgressBy(1000)
+                }
+            }
+            connectionMode = "aidl"
+            changeViewEnable()
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            aidlService = null
+        }
+    }
 
     private fun onCreateAIDLService() {
-
+        binding.aidlPlay.setOnClickListener {
+            val intent = Intent("ACTION_SERVICE_AIDL")
+            intent.setPackage("com.example.ch15_outer")
+            bindService(intent, aidlConnection, Context.BIND_AUTO_CREATE)
+        }
+        binding.aidlStop.setOnClickListener {
+            aidlService!!.stop()
+            unbindService(aidlConnection)
+            aidlJob?.cancel()
+            connectionMode = "none"
+            changeViewEnable()
+        }
     }
-    private fun onStopAIDLService() {
 
+    private fun onStopAIDLService() {
+        unbindService(aidlConnection)
     }
 
     // JobScheduler
