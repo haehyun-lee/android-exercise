@@ -81,17 +81,17 @@ class MainActivity : AppCompatActivity() {
 
     // messenger handler
     inner class HandlerReplyMsg : Handler(Looper.getMainLooper()) {
+        // 외부 앱의 IcomingHandler의 handleMessage() 함수에서 전송한 데이터 처리
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
-            // 외부 앱 서비스에서 전송한 데이터
             when (msg.what) {
                 10 -> {
                     // 재생 후 시간
                     val bundle = msg.obj as Bundle
                     bundle.getInt("duration")?.let {
                         when {
-                            (it > 0) -> {
-                                // 음악 프로그래스바 진행
+                            it > 0 -> {
+                                // 음악 프로그래스바 진행 (UI 작업은 메인 스레드에서만 가능)
                                 binding.messengerProgress.max = it
                                 val backgroundScope = CoroutineScope(Dispatchers.Default + Job())
                                 messengerJob = backgroundScope.launch {
@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
             // 서비스에서 반환된 IBinder로 Messenger 생성, 외부 앱 서비스의 핸들러 사용
             messenger = Messenger(service)
             val msg = Message()
-            msg.replyTo = replyMessenger
+            msg.replyTo = replyMessenger    // 해당 메시지에 대한 회신용 메신저
             msg.what = 10
             messenger.send(msg)
             connectionMode = "messenger"
@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onCreateMessengerService() {
-        // 해당 액티비이의 Handler로 Messenger 생성, 해당 앱의 핸들러 사용
+        // 해당 액티비티의 Handler로 Messenger 생성
         replyMessenger = Messenger(HandlerReplyMsg())
         binding.messengerPlay.setOnClickListener{
             // 암시적 인텐트로 외부 앱 연동, 서비스 실행

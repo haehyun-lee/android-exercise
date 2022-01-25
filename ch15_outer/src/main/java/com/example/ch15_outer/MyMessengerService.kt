@@ -32,7 +32,7 @@ class MyMessengerService : Service() {
             when (msg.what) {
                 10 -> {
                     // 서비스에 연결되자마자 전달되는 메시지
-                    replyMessenger = msg.replyTo
+                    replyMessenger = msg.replyTo            // 회신용 메신저 얻기, HandleReplyMsg 핸들러
                     if (!player.isPlaying) {
                         player = MediaPlayer.create(this@MyMessengerService, R.raw.music)
                         try {
@@ -42,7 +42,7 @@ class MyMessengerService : Service() {
                             val replyBundle = Bundle()
                             replyBundle.putInt("duration", player.duration)
                             replyMsg.obj = replyBundle
-                            replyMessenger.send(replyMsg)
+                            replyMessenger.send(replyMsg)   // HandleReplyMsg 핸들러에 Message 회신
 
                             // 음악 재생
                             player.start()
