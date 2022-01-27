@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.androidlab">
 
-    <permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
     <queries>
-        <package android:name="com.example.test_outter" />
+        <package android:name="com.example.test_outer" />
     </queries>
 
     <application
