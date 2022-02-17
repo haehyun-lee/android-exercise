@@ -13,4 +13,9 @@
         android:layout_height="wrap_content"
         android:text="TEST" />
 
+    <ImageView
+        android:id="@+id/resultImageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp" />
+
 </LinearLayout>
