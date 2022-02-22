@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <SwitchPreferenceCompat
+        app:key="b1"
+        app:title="B - 1 Setting"/>
+    <SwitchPreferenceCompat
+        app:key="b2"
+        app:title="B - 2 Setting"/>
+
+</PreferenceScreen>

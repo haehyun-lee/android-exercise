@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <SwitchPreferenceCompat
+        app:key="a1"
+        app:title="A - 1 Setting"/>
+    <SwitchPreferenceCompat
+        app:key="a2"
+        app:title="A - 2 Setting"/>
+</PreferenceScreen>

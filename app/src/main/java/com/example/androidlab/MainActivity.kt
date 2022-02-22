@@ -1,23 +1,20 @@
 package com.example.androidlab
 
-import android.content.ContentUris
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Size
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import com.example.androidlab.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
     lateinit var binding: ActivityMainBinding
     lateinit var requestLauncher: ActivityResultLauncher<Intent>
 
@@ -87,6 +84,8 @@ class MainActivity : AppCompatActivity() {
 
         */
 
+        /*
+
         // 공용 저장소 접근
         val projection = arrayOf(
             MediaStore.Images.Media._ID,
@@ -123,6 +122,8 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+         */
+
 
         /*
         cursor?.let {
@@ -148,8 +149,40 @@ class MainActivity : AppCompatActivity() {
 
          */
 
+        /*
+        val sharedPref = getPreferences(Context.MODE_PRIVATE)
 
+        sharedPref.edit().run {
+            putString("data1", "hello1")
+            putInt("data2", 10)
+            commit()
+        }
 
+        val data1 = sharedPref.getString("data1", "world")
+        val data2 = sharedPref.getInt("data2", 10)
+        */
+    }
 
+    override fun onPreferenceStartFragment(
+        caller: PreferenceFragmentCompat,
+        pref: Preference,
+    ): Boolean {
+        // 새로운 Fragment 인스턴스화
+        val args = pref.extras
+        val fragment =
+            supportFragmentManager.fragmentFactory.instantiate(
+                classLoader,
+                pref.fragment.toString())
+        fragment.setTargetFragment(caller, 0)
+
+        // Fragment의 요소를 새로운 Preference로 교체
+        // activity_main의 <Fragment> 레이아웃의 클래스 교체
+        fragment.arguments = args
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.setting_content, fragment)
+            .addToBackStack(null)
+            .commit()
+        return true
     }
 }
+
