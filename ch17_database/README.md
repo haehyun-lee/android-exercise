@@ -21,3 +21,5 @@
 
 <img src="https://user-images.githubusercontent.com/86085387/155162214-a6be21e7-ab1b-4cd2-993b-451ea1c9b662.gif" width="350" />
 
+## Layout
+![ch17](https://user-images.githubusercontent.com/86085387/155284656-49aa2791-d49c-4361-877a-eeea668a7cfe.jpg)
