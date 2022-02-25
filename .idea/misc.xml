@@ -23,6 +23,7 @@
         <entry key="..\:/AndroidStudioProjects/AndroidLab/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.38229166666666664" />
         <entry key="..\:/AndroidStudioProjects/AndroidLab/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.38229166666666664" />
         <entry key="..\:/AndroidStudioProjects/AndroidLab/app/src/main/res/xml/file_paths.xml" value="0.1408514492753623" />
+        <entry key="..\:/AndroidStudioProjects/AndroidLab/app/src/main/res/xml/network_security_config.xml" value="0.1703125" />
         <entry key="..\:/AndroidStudioProjects/AndroidLab/app/src/main/res/xml/setting_a.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidStudioProjects/AndroidLab/app/src/main/res/xml/setting_b.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidStudioProjects/AndroidLab/app/src/main/res/xml/settings.xml" value="0.36614583333333334" />
@@ -51,13 +52,20 @@
         <entry key="..\:/AndroidStudioProjects/AndroidLab/ch16_provider/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidStudioProjects/AndroidLab/ch16_provider/src/main/res/xml/file_paths.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidStudioProjects/AndroidLab/ch17_database/src/main/res/layout/activity_add.xml" value="0.3619791666666667" />
-        <entry key="..\:/AndroidStudioProjects/AndroidLab/ch17_database/src/main/res/layout/activity_main.xml" value="0.21197916666666666" />
+        <entry key="..\:/AndroidStudioProjects/AndroidLab/ch17_database/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/AndroidLab/ch17_database/src/main/res/layout/activity_setting.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidStudioProjects/AndroidLab/ch17_database/src/main/res/layout/fragment_my_adapter.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidStudioProjects/AndroidLab/ch17_database/src/main/res/layout/item_recyclerview.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/AndroidLab/ch17_database/src/main/res/menu/menu_add.xml" value="0.2265625" />
         <entry key="..\:/AndroidStudioProjects/AndroidLab/ch17_database/src/main/res/menu/menu_main.xml" value="0.2265625" />
+        <entry key="..\:/AndroidStudioProjects/AndroidLab/ch17_database/src/main/res/xml/root_preferences.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/AndroidLab/ch17_database/src/main/res/xml/settings.xml" value="0.21603260869565216" />
+        <entry key="..\:/AndroidStudioProjects/AndroidLab/ch18_network/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/AndroidStudioProjects/AndroidLab/ch18_network/src/main/res/layout/fragment_retrofit.xml" value="0.21693840579710144" />
+        <entry key="..\:/AndroidStudioProjects/AndroidLab/ch18_network/src/main/res/layout/fragment_valley.xml" value="0.21693840579710144" />
+        <entry key="..\:/AndroidStudioProjects/AndroidLab/ch18_network/src/main/res/layout/fragment_volley.xml" value="0.23596014492753623" />
+        <entry key="..\:/AndroidStudioProjects/AndroidLab/ch18_network/src/main/res/layout/item_main.xml" value="0.33" />
+        <entry key="..\:/AndroidStudioProjects/AndroidLab/ch18_network/src/main/res/menu/menu_main.xml" value="0.23541666666666666" />
         <entry key="..\:/AndroidStudioProjects/AndroidLab/ch6_view/src/main/res/layout/activity_main.xml" value="0.26358695652173914" />
         <entry key="..\:/AndroidStudioProjects/AndroidLab/ch7_layout/src/main/res/layout/activity_main.xml" value="0.2953125" />
         <entry key="..\:/AndroidStudioProjects/AndroidLab/ch8_event/src/main/res/drawable/round_button.xml" value="0.19322916666666667" />
