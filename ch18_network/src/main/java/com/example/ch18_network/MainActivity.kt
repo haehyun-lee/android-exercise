@@ -38,10 +38,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_volley) {
-
-        }else if (item.itemId == R.id.menu_retrofit) {
-
+        if (item.itemId == R.id.menu_volley && mode !== "volley") {
+            // Fragment 생성, 대체
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.activity_content, volleyFragment)
+                .commit()
+            mode = "volley"
+            supportActionBar?.title = "Volley Test"
+        }else if (item.itemId == R.id.menu_retrofit && mode !== "retrofit") {
+            // Fragment 생성, 대체
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.activity_content, retrofitFragment)
+                .commit()
+            mode = "retrofit"
+            supportActionBar?.title = "Retrofit Test"
         }
         return super.onOptionsItemSelected(item)
     }

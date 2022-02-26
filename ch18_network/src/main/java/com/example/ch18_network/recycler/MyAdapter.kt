@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.ch18_network.databinding.ItemMainBinding
 import com.example.ch18_network.model.ItemModel
 
@@ -23,6 +24,15 @@ class MyAdapter(val context: Context, val datas: MutableList<ItemModel>?): Recyc
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val binding = (holder as MyViewHolder).binding
 
-        // add....
+        // 데이터 화면 출력
+        val model = datas!![position]
+        binding.itemTitle.text = model.title
+        binding.itemDesc.text = model.description
+        binding.itemTime.text = "${model.author} At ${model.publishedAt}"
+
+        // Glide를 이용해 이미지를 가져와 출력
+        Glide.with(context)
+            .load(model.urlToImage)
+            .into(binding.itemImage)
     }
 }
