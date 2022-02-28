@@ -26,9 +26,6 @@ class MainActivity : AppCompatActivity() {
             .commit()
 
         supportActionBar?.title = "Volley Test"
-
-        //
-
     }
 
     // Menu
