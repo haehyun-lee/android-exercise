@@ -34,5 +34,5 @@
 * SupportMapFragment
 
 ## Screenshot
-<img src="https://user-images.githubusercontent.com/86085387/156326649-8fdc3028-bbd2-407c-b387-1cb78abf9407.png" width="300" />
-<img src="https://user-images.githubusercontent.com/86085387/156326655-f348b913-8edc-4384-b605-20e7cb34b370.png" width="300" />
+<img src="https://user-images.githubusercontent.com/86085387/156326649-8fdc3028-bbd2-407c-b387-1cb78abf9407.png" width="400" />
+<img src="https://user-images.githubusercontent.com/86085387/156326655-f348b913-8edc-4384-b605-20e7cb34b370.png" width="400" />
