@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         requestLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             if (it.resultCode == RESULT_OK) {
             }
+
         }
 
 
